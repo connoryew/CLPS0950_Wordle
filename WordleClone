@@ -1,6 +1,37 @@
 # This is the file that we will be using to write the code for our Wordle clone for the CLPS0950 Final Group Project
 # Group Members: Nicole Chen, Jilienne Widener, Connor Yew
 
+
+def check_guess(word, guess):
+    validity = []
+    for i in range(len(word)):
+        if guess[i] == word[i]:
+            validity.append("G")
+        elif guess[i] in word:
+            validity.append("Y")
+        else:
+            validity.append("N")
+    return validity
+ 
+
 def WordleClone():
-    #code
-    return
+    word = generate_word()
+
+    guesses_left = 5
+
+    while(guesses_left > 0):
+        guesses_left -= 1
+
+        guess = input('Enter your guess: ')
+        print(check_guess(word, guess))
+        print(f'Guesses left: {guesses_left}')
+
+if __name__ == '__main__':
+    word_bot()
+
+
+#currently it doesn't generate a random word i.e. requires target word input, 
+#doesn't tell you if word does not exist or if it's repeated 
+#doesn't check if the word being typed is >5 words (doesn't stop you from doing so)
+#only want one letter/color (G,Y,N) to show up for repeated letters
+#need game ends/breaks
