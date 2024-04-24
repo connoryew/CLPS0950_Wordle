@@ -5,7 +5,7 @@ import random
 
 def load_words(): 
     # This function loads a list of 5-letter words from a file
-    with open ('words.txt', 'r') as file: 
+    with open ('wordlist.txt', 'r') as file: 
         words = [line.strip().upper() for line in file if len(line.strip())== 5]
         return words 
     
@@ -15,6 +15,7 @@ def generate_word():
     return random.choice(words)
 
 def check_guess(word, guess):
+    print(f'For testing, the word is {word}')
     validity = ['N'] * 5 # Defaults all to 'N'
     word_count = {}
     for letter in word: 
@@ -66,7 +67,7 @@ def WordleClone():
         print("Game over. The word was:", word)
 
 if __name__ == '__main__':
-    wordle_clone()
+    WordleClone()
 
 
 #currently it doesn't generate a random word i.e. requires target word input, 
