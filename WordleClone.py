@@ -9,13 +9,18 @@ def load_words():
         words = [line.strip().upper() for line in file if len(line.strip())== 5]
         return words 
     
+
+def load_guesses():
+    with open('possibleguesses.txt', 'r') as file:
+        words = [line.strip().upper() for line in file if len(line.strip())== 5]
+        return words
+    
 def generate_word():
     # This function selects a random word from the list 
     words = load_words() 
     return random.choice(words)
 
 def check_guess(word, guess):
-    print(f'For testing, the word is {word}')
     validity = ['N'] * 5 # Defaults all to 'N'
     word_count = {}
     for letter in word: 
@@ -39,24 +44,44 @@ def check_guess(word, guess):
     return validity 
  
 def WordleClone():
-    word = generate_word()
 
+    word = generate_word()
+    print(f'For testing, the word is {word}')
+    possible_guesses = load_guesses()
+    # print(f'The possible guesses are {possible_guesses}')
+    
     guesses_left = 6 
     has_won = False 
+    isPossibleGuess = False
 
     while guesses_left > 0: 
         guess = input('Enter your guess: ').upper().strip()
 
-        # Validate Input 
-        if len(guess) != 5 or not guess.isalpha(): 
-            print("Invalid input. Please enter a 5-letter word,")
+        if len(guess) != 5:
+            print(f"Invalid input. {guess} is not a valid guess. Please enter a 5-letter word.")
+            continue
+
+        if not guess.isalpha():
+            print(f"Invalid input. {guess} is not a valid guess. Please enter only letters.")
+            continue
+
+        if guess in possible_guesses:
+            isPossibleGuess = True
+            
+
+        if isPossibleGuess == False:
+            print(f"Invalid input. {guess} is not a valid guess. Please enter a real word.")
             continue 
+
+        if isPossibleGuess == True:
+            print(f'You guessed {guess}')
 
         # Process Guess 
         result = check_guess(word,guess)
         print(' '.join(result))
         guesses_left -= 1
         print(f'Guesses left: {guesses_left}')
+        isPossibleGuess = False
 
         if result == ['G', 'G', 'G', 'G', 'G']:
             print("Congratulations! You've guessed the word!")
@@ -65,6 +90,8 @@ def WordleClone():
 
     if not has_won:
         print("Game over. The word was:", word)
+
+    
 
 if __name__ == '__main__':
     WordleClone()
