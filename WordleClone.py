@@ -95,10 +95,3 @@ def WordleClone():
 
 if __name__ == '__main__':
     WordleClone()
-
-
-#currently it doesn't generate a random word i.e. requires target word input, 
-#doesn't tell you if word does not exist or if it's repeated 
-#doesn't check if the word being typed is >5 words (doesn't stop you from doing so)
-#only want one letter/color (G,Y,N) to show up for repeated letters
-#need game ends/breaks
