@@ -1,6 +1,14 @@
 # This is the file that we will be using to write the code for our Wordle clone for the CLPS0950 Final Group Project
 # Group Members: Nicole Chen, Jilienne Widener, Connor Yew
 
+
+
+"""
+Next Steps: 
+    - center the words at the top on to the middle of the screen
+    - add in a keyboard to display incorrectly guessed guesses
+"""
+
 import random
 import pygame
 
