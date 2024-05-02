@@ -125,6 +125,21 @@ def WordleClone():
                 if event.key == pygame.K_BACKSPACE and not game_over:
                     guess = guess[:-1]
                 elif event.key == pygame.K_RETURN and not game_over:
+
+                    if len(guess) != 5:
+                        message = f"Invalid input. {guess} is not a valid guess. Please enter a 5-letter word."
+                        pygame.display.set_caption(message)
+                        continue
+                    if not guess.isalpha():
+                        message = f"Invalid input. {guess} is not a valid guess. Please enter only letters."
+                        pygame.display.set_caption(message)
+                        continue
+                    
+                    if not guess in possible_guesses:
+                        message = f"Invalid input. {guess} is not a valid guess. Please enter a real word."
+                        pygame.display.set_caption(message)
+                        continue
+
                     if len(guess) == 5 and guess.isalpha() and guess in possible_guesses:
                         guess_result = check_guess(word, guess)
                         guesses.append(guess)
