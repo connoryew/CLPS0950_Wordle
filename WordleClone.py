@@ -46,7 +46,9 @@ def generate_word():
 
 def draw_underlines(screen, guess):
     """Draws underlines for each letter in the guess area."""
-    base_x, base_y = 50, 700  # Starting position for the underlines
+    window_width = screen.get_width()
+    base_x = (window_width - (5*70))//2 
+    base_y = 700 
     for i in range(5):  # Draw 5 underlines
         x = base_x + i * 70  # Position each underline
         if i < len(guess):
@@ -81,9 +83,11 @@ def check_guess(word, guess):
 
 def draw_guesses(screen, guesses, results):
     """Draws the guesses with color coding on the Pygame screen."""
+    window_width = screen.get_width()
+    base_x = (window_width - (5*70))//2
     for i, (guess, result) in enumerate(zip(guesses, results)):
         for j, (letter, res) in enumerate(zip(guess, result)):
-            x = 50 + j * 70  # This positions each letter horizontally
+            x = base_x + j * 70  # This positions each letter horizontally
             y = 50 + i * 70  # This positions each guess vertically
             color = GREEN if res == 'G' else YELLOW if res == 'Y' else GRAY
             pygame.draw.rect(screen, color, pygame.Rect(x, y, 60, 60))
@@ -170,8 +174,15 @@ def WordleClone():
                 else:
                     if len(guess) < 5 and event.unicode.isalpha() and not game_over:
                         guess += (event.unicode).upper()
+                        window_width = screen.get_width()
+                        base_x = (window_width- (5*70))//2
+                        x = base_x + len(guess) *70 - 70
+                        text_surface = base_font.render(guess[-1], True, WHITE)
+                        screen.blit(text_surface, (x + 10, 700))
         if not game_over: 
-            base_x, base_y = 50, 700
+            window_width = screen.get_width()
+            base_x = (window_width - (5*70))//2
+            base_y = 700
             for i, letter in enumerate(guess):
                 x = base_x + i * 70
                 text_surface = base_font.render(letter, True, WHITE)
