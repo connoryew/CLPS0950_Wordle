@@ -4,7 +4,8 @@
 """
 Next Steps: 
     - Center the words at the top on to the middle of the screen
-    - Add in a keyboard to display incorrectly guessed guesses
+        - It looks pretty good to me, but lmk what you guys think? -CY
+    - Add in a letter bank to display incorrectly guessed guesses
         - Still working on this, but I've got the letter bank on there and centered
         - Need to overwrite the the letter bank with each submission and have letters change color as they're discovered to be yellow or green
     - Prevent players from submitting words that they have already guessed
@@ -115,7 +116,11 @@ def draw_letter_bank(screen, correct_guesses):
             text_surface = base_font.render(letter, True, BLACK)
             letter_rect = text_surface.get_rect(center=(x + 20, y + 23))
             screen.blit(text_surface, letter_rect)
- 
+
+def update_leter_bank(screen, correct_guesses):
+    "Put some code in here to actually rewrite the letter bank with the appropriate colors, then run it after each guess in the game loop below"
+
+
 def WordleClone():
     # Init wordle 
     word = generate_word()
