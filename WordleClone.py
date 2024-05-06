@@ -7,7 +7,11 @@
 Next Steps: 
     - Center the words at the top on to the middle of the screen
     - Add in a keyboard to display incorrectly guessed guesses
-        - Still working on this, but I've got a sorta working implementation?
+        - Still working on this, but I've got the letter bank on there and centered
+        - Need to overwrite the the letter bank with each submission and have letters change color as they're discovered to be yellow or green
+    - Prevent players from submitting words that they have already guessed
+    - Change the message to tell you the actual word once you hit six guesses; currently just says "Keep guessing!"
+    - Put a "CLPS0950 Wordle" title at the top if we have room?
 """
 
 import random
