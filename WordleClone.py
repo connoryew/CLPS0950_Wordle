@@ -115,7 +115,7 @@ def draw_letter_bank(screen, key_colors):
             color = key_colors.get(letter, GRAY)
             pygame.draw.rect(screen, color, pygame.Rect(x, y, 40, 40))
             text_surface = base_font.render(letter, True, BLACK)
-            letter_rect = text_surface.get_rect(center=(x + 20, y + 23))
+            letter_rect = text_surface.get_rect(center=(x + 20, y + 20))
             screen.blit(text_surface, letter_rect)
 
 def update_letter_bank(guess,result,key_colors):
@@ -190,7 +190,7 @@ def WordleClone():
                         guess_result = check_guess(word, guess)
                         guesses.append(guess)
                         results.append(guess_result)
-                        update_letter_bank(guess, guess_result, key_colors)
+                        update_letter_bank(guess,guess_result,key_colors)
                         guess = ""
                         guesses_left -= 1
                         message = "Keep Guessing!"
