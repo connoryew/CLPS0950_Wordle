@@ -97,7 +97,7 @@ def draw_guesses(screen, guesses, results):
             letter_rect = text_surface.get_rect(center=(x + 30, y + 30))
             screen.blit(text_surface, letter_rect)
 
-def draw_letter_bank(screen, correct_guesses):
+def draw_letter_bank(screen, key_colors):
     window_width = screen.get_width()
     rows = [
         "QWERTYUIOP",
@@ -112,14 +112,20 @@ def draw_letter_bank(screen, correct_guesses):
         for col_index, letter in enumerate(row):
             x = base_x + col_index * 50
             y = base_y + row_index * 50
-            pygame.draw.rect(screen, GRAY, pygame.Rect(x, y, 40, 40))
+            color = key_colors.get(letter, GRAY)
+            pygame.draw.rect(screen, color, pygame.Rect(x, y, 40, 40))
             text_surface = base_font.render(letter, True, BLACK)
             letter_rect = text_surface.get_rect(center=(x + 20, y + 23))
             screen.blit(text_surface, letter_rect)
 
-def update_leter_bank(screen, correct_guesses):
-    "Put some code in here to actually rewrite the letter bank with the appropriate colors, then run it after each guess in the game loop below"
-
+def update_letter_bank(guess,result,key_colors):
+    for letter, res in zip(guess, result):
+        if res == 'G':
+            key_colors[letter] = GREEN
+        elif res == 'Y':
+            key_colors[letter] = YELLOW
+        elif res == 'N' and key_colors[letter] not in [GREEN, YELLOW]:
+            key_colors[letter] = GRAY
 
 def WordleClone():
     # Init wordle 
@@ -134,6 +140,7 @@ def WordleClone():
     isPossibleGuess = False
     running = True 
     game_over = False
+    key_colors = {letter: GRAY for letter in string.ascii_uppercase}
     correct_guesses = set()
     background_color = "black"
     text_rect = pygame.Rect(50, 650, 400, 100)
@@ -145,7 +152,7 @@ def WordleClone():
         screen.fill(BLACK)  # Clear the screen at the start of each frame
         draw_guesses(screen, guesses, results)
         draw_underlines(screen, guess)  # Draw underlines for guess input
-        draw_letter_bank(screen, correct_guesses)
+        draw_letter_bank(screen, key_colors)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -183,6 +190,7 @@ def WordleClone():
                         guess_result = check_guess(word, guess)
                         guesses.append(guess)
                         results.append(guess_result)
+                        update_letter_bank(guess, guess_result, key_colors)
                         guess = ""
                         guesses_left -= 1
                         message = "Keep Guessing!"
@@ -207,7 +215,7 @@ def WordleClone():
                         text_surface = base_font.render(guess[-1], True, WHITE)
                         screen.blit(text_surface, (x + 10, 700))
                         if guess[-1] in word:
-                            correct_guesses.add(guess[-1])
+                            key_colors[guess[-1]] = GREEN
         if not game_over: 
             window_width = screen.get_width()
             base_x = (window_width - (5*70))//2
@@ -216,7 +224,6 @@ def WordleClone():
                 x = base_x + i * 70
                 text_surface = base_font.render(letter, True, WHITE)
                 screen.blit(text_surface, (x+10, base_y))  # Position the text entry near the bottom
-
 
         pygame.display.flip()
         clock.tick(60)
