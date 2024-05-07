@@ -8,7 +8,6 @@ Next Steps:
     - Add in a letter bank to display incorrectly guessed guesses
         - Still working on this, but I've got the letter bank on there and centered
         - Need to overwrite the the letter bank with each submission and have letters change color as they're discovered to be yellow or green
-    - Prevent players from submitting words that they have already guessed
     - Change the message to tell you the actual word once you hit six guesses; currently just says "Keep guessing!"
     - Put a "CLPS0950 Wordle" title at the top if we have room?
 """
@@ -171,6 +170,10 @@ def WordleClone():
                 if event.key == pygame.K_BACKSPACE and not game_over:
                     guess = guess[:-1]
                 elif event.key == pygame.K_RETURN and not game_over:
+                    if guess in guesses: 
+                        message = f"You have already guessed that word. Try another."
+                        pygame.display.set_caption(message)
+                        continue
 
                     if len(guess) != 5:
                         message = f"Invalid input. {guess} is not a valid guess. Please enter a 5-letter word."
@@ -191,18 +194,17 @@ def WordleClone():
                         guesses.append(guess)
                         results.append(guess_result)
                         update_letter_bank(guess,guess_result,key_colors)
-                        guess = ""
                         guesses_left -= 1
-                        message = "Keep Guessing!"
-                        pygame.display.set_caption(message)  # Display error message in window title
                         if guess_result == ['G'] * 5:
                             message = "Congratulations! You've guessed the word!"
-                            pygame.display.set_caption(message)  # Display success message in window title
-                            results[-1] = ['G'] * 5
-                            draw_guesses(screen, guesses, results)
                             game_over = True
-                        elif guesses_left ==0:
+                        elif guesses_left == 0:
+                            message = f"Game over. The word was: {word}"  # Display message with the word
                             game_over = True
+                        else:
+                            message = "Keep Guessing!"
+                        pygame.display.set_caption(message)
+                        guess = ""  # Reset guess after processing
                     else:
                         message = "Invalid input. Enter a valid 5-letter word."
                         pygame.display.set_caption(message)  # Display error message in window title
