@@ -3,12 +3,9 @@
 
 """
 Next Steps: 
-    - Center the words at the top on to the middle of the screen
-        - It looks pretty good to me, but lmk what you guys think? -CY
     - Add in a letter bank to display incorrectly guessed guesses
         - Still working on this, but I've got the letter bank on there and centered
         - Need to overwrite the the letter bank with each submission and have letters change color as they're discovered to be yellow or green
-    - Change the message to tell you the actual word once you hit six guesses; currently just says "Keep guessing!"
     - Put a "CLPS0950 Wordle" title at the top if we have room?
 """
 
@@ -20,12 +17,13 @@ import string
 GREEN = (0, 128, 0)
 YELLOW = (255, 255, 0)
 GRAY = (128, 128, 128)
+LIGHTGRAY = (220, 220, 220)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # initalize the pygame game on load 
 pygame.init()
-screen = pygame.display.set_mode((600,1000))
+screen = pygame.display.set_mode((550,700))
 pygame.display.set_caption("Wordle Clone")
 base_font = pygame.font.Font(None, 70)
 clock = pygame.time.Clock()
@@ -51,7 +49,7 @@ def draw_underlines(screen, guess):
     """Draws underlines for each letter in the guess area."""
     window_width = screen.get_width()
     base_x = (window_width - (5*70))//2 
-    base_y = 625 
+    base_y = 425 
     for i in range(5):  # Draw 5 underlines
         x = base_x + i * 70  # Position each underline
         if i < len(guess):
@@ -103,7 +101,7 @@ def draw_letter_bank(screen, key_colors):
         "ASDFGHJKL",
         "ZXCVBNM"
     ]
-    base_y = 700
+    base_y = 500
     max_width = max(len(row) * 50 for row in rows)
     for row_index, row in enumerate(rows):
         row_width = len(row) * 50
@@ -111,7 +109,7 @@ def draw_letter_bank(screen, key_colors):
         for col_index, letter in enumerate(row):
             x = base_x + col_index * 50
             y = base_y + row_index * 50
-            color = key_colors.get(letter, GRAY)
+            color = key_colors.get(letter, LIGHTGRAY)
             pygame.draw.rect(screen, color, pygame.Rect(x, y, 40, 40))
             text_surface = base_font.render(letter, True, BLACK)
             letter_rect = text_surface.get_rect(center=(x + 20, y + 20))
@@ -139,12 +137,13 @@ def WordleClone():
     isPossibleGuess = False
     running = True 
     game_over = False
-    key_colors = {letter: GRAY for letter in string.ascii_uppercase}
+    key_colors = {letter: LIGHTGRAY for letter in string.ascii_uppercase}
     correct_guesses = set()
     background_color = "black"
     text_rect = pygame.Rect(50, 650, 400, 100)
     base_font = pygame.font.Font(None, 70)
     clock = pygame.time.Clock()
+    isSubmitted = True
 
 
     while running:
@@ -193,7 +192,6 @@ def WordleClone():
                         guess_result = check_guess(word, guess)
                         guesses.append(guess)
                         results.append(guess_result)
-                        update_letter_bank(guess,guess_result,key_colors)
                         guesses_left -= 1
                         if guess_result == ['G'] * 5:
                             message = "Congratulations! You've guessed the word!"
@@ -203,6 +201,8 @@ def WordleClone():
                             game_over = True
                         else:
                             message = "Keep Guessing!"
+                        update_letter_bank(guess,guess_result,key_colors)
+                        isSubmitted = True
                         pygame.display.set_caption(message)
                         guess = ""  # Reset guess after processing
                     else:
@@ -217,11 +217,12 @@ def WordleClone():
                         text_surface = base_font.render(guess[-1], True, WHITE)
                         screen.blit(text_surface, (x + 10, 700))
                         if guess[-1] in word:
-                            key_colors[guess[-1]] = GREEN
+                            if isSubmitted == False:
+                                key_colors[guess[-1]] = GREEN
         if not game_over: 
             window_width = screen.get_width()
             base_x = (window_width - (5*70))//2
-            base_y = 625
+            base_y = 425
             for i, letter in enumerate(guess):
                 x = base_x + i * 70
                 text_surface = base_font.render(letter, True, WHITE)
