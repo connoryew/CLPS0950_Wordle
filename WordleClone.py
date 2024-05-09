@@ -2,10 +2,7 @@
 # Group Members: Nicole Chen, Jilienne Widener, Connor Yew
 
 """
-Next Steps: 
-    - Add in a letter bank to display incorrectly guessed guesses
-        - Still working on this, but I've got the letter bank on there and centered
-        - Need to overwrite the the letter bank with each submission and have letters change color as they're discovered to be yellow or green
+Next Steps:
     - Put a "CLPS0950 Wordle" title at the top if we have room?
 """
 
