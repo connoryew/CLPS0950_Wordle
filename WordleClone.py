@@ -99,6 +99,9 @@ def draw_letter_bank(screen, key_colors):
         "ZXCVBNM"
     ]
     base_y = 500
+    Dark_Gray = (100, 100, 100)
+    letter_bank_font = pygame.font.Font(None, 60)  # Reduced from base_font which was at 70
+
     max_width = max(len(row) * 50 for row in rows)
     for row_index, row in enumerate(rows):
         row_width = len(row) * 50
@@ -106,20 +109,21 @@ def draw_letter_bank(screen, key_colors):
         for col_index, letter in enumerate(row):
             x = base_x + col_index * 50
             y = base_y + row_index * 50
-            color = key_colors.get(letter, LIGHTGRAY)
+            color = key_colors.get(letter, Dark_Gray)
             pygame.draw.rect(screen, color, pygame.Rect(x, y, 40, 40))
-            text_surface = base_font.render(letter, True, BLACK)
+            text_surface = letter_bank_font.render(letter, True, LIGHTGRAY)
             letter_rect = text_surface.get_rect(center=(x + 20, y + 20))
             screen.blit(text_surface, letter_rect)
 
 def update_letter_bank(guess,result,key_colors):
+    Darker_Gray = (20, 20, 20)
     for letter, res in zip(guess, result):
         if res == 'G':
             key_colors[letter] = GREEN
         elif res == 'Y':
             key_colors[letter] = YELLOW
         elif res == 'N' and key_colors[letter] not in [GREEN, YELLOW]:
-            key_colors[letter] = GRAY
+            key_colors[letter] = Darker_Gray
 
 def WordleClone():
     # Init wordle 
@@ -134,7 +138,8 @@ def WordleClone():
     isPossibleGuess = False
     running = True 
     game_over = False
-    key_colors = {letter: LIGHTGRAY for letter in string.ascii_uppercase}
+    Dark_Gray = (100, 100, 100)
+    key_colors = {letter: Dark_Gray for letter in string.ascii_uppercase}
     correct_guesses = set()
     background_color = "black"
     text_rect = pygame.Rect(50, 650, 400, 100)
