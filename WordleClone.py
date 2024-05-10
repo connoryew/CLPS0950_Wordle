@@ -20,7 +20,7 @@ BLACK = (0, 0, 0)
 
 # initalize the pygame game on load 
 pygame.init()
-screen = pygame.display.set_mode((550,700))
+screen = pygame.display.set_mode((550,775))
 pygame.display.set_caption("Wordle Clone")
 base_font = pygame.font.Font(None, 70)
 clock = pygame.time.Clock()
@@ -46,7 +46,7 @@ def draw_underlines(screen, guess):
     """Draws underlines for each letter in the guess area."""
     window_width = screen.get_width()
     base_x = (window_width - (5*70))//2 
-    base_y = 425 
+    base_y = 540 
     for i in range(5):  # Draw 5 underlines
         x = base_x + i * 70  # Position each underline
         if i < len(guess):
@@ -98,7 +98,7 @@ def draw_letter_bank(screen, key_colors):
         "ASDFGHJKL",
         "ZXCVBNM"
     ]
-    base_y = 500
+    base_y = 615
     Dark_Gray = (100, 100, 100)
     letter_bank_font = pygame.font.Font(None, 60)  # Reduced from base_font which was at 70
 
@@ -154,7 +154,7 @@ def WordleClone():
        
 
         #Display the "WORDLE" title at the top
-        title_surface = title_font.render("Wordle", True, WHITE)
+        title_surface = title_font.render("CLPS0950 Wordle", True, WHITE)
         title_rect = title_surface.get_rect(center=(screen.get_width() // 2, 40))
         screen.blit(title_surface, title_rect)
 
@@ -235,7 +235,7 @@ def WordleClone():
         if not game_over: 
             window_width = screen.get_width()
             base_x = (window_width - (5*70))//2
-            base_y = 425
+            base_y = 540
             for i, letter in enumerate(guess):
                 x = base_x + i * 70
                 text_surface = base_font.render(letter, True, WHITE)
