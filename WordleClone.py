@@ -1,4 +1,4 @@
-# This is the file that we will be using to write the code for our Wordle clone for the CLPS0950 Final Group Project
+# TEST: TITLE This is the file that we will be using to write the code for our Wordle clone for the CLPS0950 Final Group Project
 # Group Members: Nicole Chen, Jilienne Widener, Connor Yew
 
 """
@@ -84,7 +84,7 @@ def draw_guesses(screen, guesses, results):
     for i, (guess, result) in enumerate(zip(guesses, results)):
         for j, (letter, res) in enumerate(zip(guess, result)):
             x = base_x + j * 70  # This positions each letter horizontally
-            y = 50 + i * 70  # This positions each guess vertically
+            y = 80 + i * 70  # This positions each guess vertically
             color = GREEN if res == 'G' else YELLOW if res == 'Y' else GRAY
             pygame.draw.rect(screen, color, pygame.Rect(x, y, 60, 60))
             text_surface = base_font.render(letter, True, BLACK)
@@ -139,12 +139,23 @@ def WordleClone():
     background_color = "black"
     text_rect = pygame.Rect(50, 650, 400, 100)
     base_font = pygame.font.Font(None, 70)
+    title_font = pygame.font.Font(None, 80)  # Larger font for the title
     clock = pygame.time.Clock()
     isSubmitted = True
 
 
     while running:
         screen.fill(BLACK)  # Clear the screen at the start of each frame
+       
+
+        #Display the "WORDLE" title at the top
+        title_surface = title_font.render("Wordle", True, WHITE)
+        title_rect = title_surface.get_rect(center=(screen.get_width() // 2, 40))
+        screen.blit(title_surface, title_rect)
+
+        draw_guesses(screen, guesses, results)
+        draw_underlines(screen, guess)  # Draw underlines for guess input
+        draw_letter_bank(screen, key_colors)
         draw_guesses(screen, guesses, results)
         draw_underlines(screen, guess)  # Draw underlines for guess input
         draw_letter_bank(screen, key_colors)
