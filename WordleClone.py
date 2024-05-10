@@ -1,10 +1,5 @@
-# TEST: TITLE This is the file that we will be using to write the code for our Wordle clone for the CLPS0950 Final Group Project
+# This is the file that we will be using to write the code for our Wordle clone for the CLPS0950 Final Group Project
 # Group Members: Nicole Chen, Jilienne Widener, Connor Yew
-
-"""
-Next Steps:
-    - Put a "CLPS0950 Wordle" title at the top if we have room?
-"""
 
 import random
 import pygame
@@ -20,7 +15,7 @@ BLACK = (0, 0, 0)
 
 # initalize the pygame game on load 
 pygame.init()
-screen = pygame.display.set_mode((550,775))
+screen = pygame.display.set_mode((550,730))
 pygame.display.set_caption("Wordle Clone")
 base_font = pygame.font.Font(None, 70)
 clock = pygame.time.Clock()
@@ -46,7 +41,7 @@ def draw_underlines(screen, guess):
     """Draws underlines for each letter in the guess area."""
     window_width = screen.get_width()
     base_x = (window_width - (5*70))//2 
-    base_y = 540 
+    base_y = 485
     for i in range(5):  # Draw 5 underlines
         x = base_x + i * 70  # Position each underline
         if i < len(guess):
@@ -98,8 +93,7 @@ def draw_letter_bank(screen, key_colors):
         "ASDFGHJKL",
         "ZXCVBNM"
     ]
-    base_y = 615
-    Dark_Gray = (100, 100, 100)
+    base_y = 565
     letter_bank_font = pygame.font.Font(None, 60)  # Reduced from base_font which was at 70
 
     max_width = max(len(row) * 50 for row in rows)
@@ -109,21 +103,20 @@ def draw_letter_bank(screen, key_colors):
         for col_index, letter in enumerate(row):
             x = base_x + col_index * 50
             y = base_y + row_index * 50
-            color = key_colors.get(letter, Dark_Gray)
+            color = key_colors.get(letter, LIGHTGRAY)
             pygame.draw.rect(screen, color, pygame.Rect(x, y, 40, 40))
-            text_surface = letter_bank_font.render(letter, True, LIGHTGRAY)
+            text_surface = letter_bank_font.render(letter, True, BLACK)
             letter_rect = text_surface.get_rect(center=(x + 20, y + 20))
             screen.blit(text_surface, letter_rect)
 
 def update_letter_bank(guess,result,key_colors):
-    Darker_Gray = (20, 20, 20)
     for letter, res in zip(guess, result):
         if res == 'G':
             key_colors[letter] = GREEN
         elif res == 'Y':
             key_colors[letter] = YELLOW
         elif res == 'N' and key_colors[letter] not in [GREEN, YELLOW]:
-            key_colors[letter] = Darker_Gray
+            key_colors[letter] = GRAY
 
 def WordleClone():
     # Init wordle 
@@ -138,13 +131,12 @@ def WordleClone():
     isPossibleGuess = False
     running = True 
     game_over = False
-    Dark_Gray = (100, 100, 100)
-    key_colors = {letter: Dark_Gray for letter in string.ascii_uppercase}
+    key_colors = {letter: LIGHTGRAY for letter in string.ascii_uppercase}
     correct_guesses = set()
     background_color = "black"
     text_rect = pygame.Rect(50, 650, 400, 100)
     base_font = pygame.font.Font(None, 70)
-    title_font = pygame.font.Font(None, 80)  # Larger font for the title
+    title_font = pygame.font.Font(None, 75)  # Larger font for the title
     clock = pygame.time.Clock()
     isSubmitted = True
 
@@ -235,7 +227,7 @@ def WordleClone():
         if not game_over: 
             window_width = screen.get_width()
             base_x = (window_width - (5*70))//2
-            base_y = 540
+            base_y = 485
             for i, letter in enumerate(guess):
                 x = base_x + i * 70
                 text_surface = base_font.render(letter, True, WHITE)
