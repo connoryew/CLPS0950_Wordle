@@ -134,7 +134,7 @@ def WordleClone():
 
     # INITIALIZATION:
     word = generate_word()
-    print(f'For testing, the word is {word}') # NOTE: Comment out this line once your code is finished to avoid giving the answer away to players
+    #print(f'For testing, the word is {word}') # NOTE: Comment out this line once your code is finished to avoid giving the answer away to players
     possible_guesses = load_guesses()
     guesses = []
     results = []
