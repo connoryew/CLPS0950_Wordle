@@ -1373,7 +1373,7 @@ reach
 nobly
 empty
 speed
-gipsy
+gypsy
 recur
 smock
 dread
