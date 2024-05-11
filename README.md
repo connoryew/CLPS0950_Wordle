@@ -1,4 +1,4 @@
-[Insert GIF of Wordle gameplay here]
+![](https://github.com/connoryew/CLPS0950_Wordle/blob/main/CLPS0950GIF.gif)
 
 **Group Members:** Nicole Chen, Jilienne Widener, Connor Yew
 
